@@ -1,0 +1,27 @@
+<!doctype html>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}" />
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='bootstrap.min.css') }}"
+/>
+<html lang="en">
+  <nav>
+    <h1 class="bg-black text-white">Brennan's Flask Thing</h1>
+    <ul>
+      {% if g.user %}
+      <li><span>{{ g.user['username'] }}</span></li>
+      <li><a href="{{ url_for('auth.logout') }}"></a></li>
+      {% else %}
+      <li><a href="{{url_for('auth.register') }}"></a></li>
+      <li><a href="{{url_for('auth.login') }}"></a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  <section class="content bg-pewter">
+    <header>{% block header %}{%endblock%}</header>
+    {% for order in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %} {% block content %}{%endblock%}
+  </section>
+</html>
