@@ -22,7 +22,7 @@ Flask Prototype for making, editing, and deleting orders of a set of items.
 
 ### Installing
 
-- Run 'git clone https://github.com/BrennanA757/csci625miniproject5BrennanAdams' and 'cd csci625miniproject5BrennanAdams'
+- Run 'git clone https://github.com/BrennanA757/miniproject5BrennanAdams' and 'cd miniproject5BrennanAdams'
 
 ### Executing program
 
