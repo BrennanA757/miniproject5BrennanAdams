@@ -116,3 +116,9 @@ input[type="submit"] {
 .login-btn {
   background-color: #419fec;
 }
+.text-black{
+  text-decoration-color: #000000;
+}
+.bg-yellow{
+  background-color:#f2b817;
+}

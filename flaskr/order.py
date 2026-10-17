@@ -16,7 +16,7 @@ def index():
         'SELECT o.customerID, u.username'
         ' FROM "order" o JOIN user u ON o.customerID = u.customerID'
     ).fetchall()
-    return render_template('blog/index.html', _orders=_orders)
+    return render_template('orders/index.html', _orders=_orders)
 
 
 @bp.route('/order', methods=('GET', 'POST'))
