@@ -13,13 +13,11 @@
       <header>
         <div>
           <p>Ordered on {{ order['createdAt'].strftime('%Y-%m-%d') }}</p>
-          <p>Apples: {{order['item1Quantity']}}</p>
-          <p>Bananas: {{order['item2Quantity']}}</p>
-          <p>Oranges: {{order['item3Quantity']}}</p>
+          <p>Apples: {{order['item1Quantity']}} <br> Bananas: {{order['item2Quantity']}} <br> Oranges: {{order['item3Quantity']}} <br> Total: ${{ '%.2f' | format(order['cost'] | float)}}</p>
         </div>
       </header>
-      {% if g.user['id'] == order['customerID'] %}
-        <a class="action" href="{{ url_for('order.update', id=order['customerID']) }}">Edit</a>
+      {% if g.user['customerID'] == order['customerID'] %}
+        <a class="action" href="{{ url_for('orders.update', id=order['customerID']) }}">Edit</a>
       {% endif %}
     </article>
     {% if not loop.last %}

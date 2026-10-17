@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit Order{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post" oninput="total.value = (Number(item1.value) * Number(item1Cost.value) + Number(item2.value) * Number(item2Cost.value) + Number(item3.value) * Number(item3Cost.value)).toFixed(2)">
+    <div class="input-row">
+        <label for="title">Apples</label>
+        <input name="item1" id="item1" type="number" min="0"
+            value="{{ request.form['item1'] or order['item1Quantity'] }}" required>
+        <input type="hidden" name="item1Cost" value="1.7">
+    </div>
+    
+    <div class="input-row">
+        <label for="title">Bananas</label>
+        <input name="item2" id="item2" type="number" min="0"
+            value="{{ request.form['item2'] or order['item2Quantity'] }}" required>
+        <input type="hidden" name="item2Cost" value="0.75">
+    </div>
+    
+    <div class="input-row">
+        <label for="title">Oranges</label>
+        <input name="item3" id="item3" type="number" min="0"
+            value="{{ request.form['item3'] or order['item3Quantity'] }}" required>
+        <input type="hidden" name="item3Cost" value="1.00">
+    </div>
+    
+    <div class="input-row">
+        <label>Total:</label>
+        <input type="text" name="total" id="total" readonly value="{{order['cost']}}" class="form-control">
+    </div>
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('orders.delete', id=order['id']) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+{% endblock %}

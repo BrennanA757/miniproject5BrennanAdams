@@ -47,8 +47,8 @@ def create():
 
 def get_order(id, check_author=True):
     order = get_db().execute(
-        'SELECT o.id, o.customerID, o.cost, o.createdAt'
-        ' FROM order o JOIN user u ON o.customerID = u.customerID'
+        'SELECT o.id, o.customerID, o.cost, o.createdAt, o.item1Quantity, o.item2Quantity, o.item3Quantity'
+        ' FROM "order" o JOIN user u ON o.customerID = u.customerID'
         ' WHERE o.customerID = ?',
         (id,)
     ).fetchone()
@@ -56,7 +56,7 @@ def get_order(id, check_author=True):
     if order is None:
         abort(404, f"Order id {id} doesn't exist.")
 
-    if check_author and order['customerID'] != g.user['id']:
+    if check_author and order['customerID'] != g.user['customerID']:
         abort(403)
 
     return order
@@ -68,24 +68,23 @@ def update(id):
     order = get_order(id)
 
     if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
+        item1 = request.form['item1']
+        item2 = request.form['item2']
+        item3 = request.form['item3']
+        total = request.form['total']
         error = None
-
-        if not title:
-            error = 'Title is required.'
 
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                'UPDATE "order" SET title = ?, body = ?'
-                ' WHERE id = ?',
-                (title, body, id)
+                'UPDATE "order" SET cost = ?, item1Quantity = ?, item2Quantity = ?, item3Quantity = ?'
+                ' WHERE customerID = ?',
+                (total, item1, item2, item3, id)
             )
             db.commit()
-            return redirect(url_for('blog.index'))
+            return redirect(url_for('orders.index'))
 
     return render_template('orders/update.html', order=order)
 
