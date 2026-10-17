@@ -1,13 +1,25 @@
 {%extends 'base.html'%} {%block header %}
 <h1>{% block title %}Log In{%endblock%}</h1>
 {%endblock%} {% block content %}
-<form method="post">
-    <label for="item1">Apples</label>
-    <input name="item1" id="item1" value="{{request.form['item1'] }}"/>
-    <label for="item2">Bananas</label>
-    <input name="item2" id="item2" value="{{request.form['item2'] }}"/>
-    <label for="item3">Oranges</label>
-    <input name="item3" id="item3" value="{{request.form['item3'] }}"/>
-    <input type="submit" value="Order">
+<form method="post" oninput="totalCost.value = (Number(item1.value) * Number(item1Cost.value) + Number(item2.value) * Number(item2Cost.value) + Number(item3.value) * Number(item3Cost.value)).toFixed(2)">
+    <div class="input-row">
+        <label for="item1">Apples: 1.70$</label>
+        <input type="number" name="item1" id="item1" value=0 class='item-input'/>
+        <input type="hidden" name="item1Cost" value="1.70">
+    </div>    
+    <div class="input-row">
+        <label for="item2">Bananas: 0.75$</label>
+        <input type="number" name="item2" id="item2" value=0 class='item-input'/>
+        <input type="hidden" name="item2Cost" value="0.75">
+    </div>
+    <div class="input-row">
+        <label for="item3">Oranges: 1.00$</label>
+        <input type="number" name="item3" id="item3" value=0 class='item-input'/>
+        <input type="hidden" name="item3Cost" value="1.00">
+    </div>
+
+    <strong name="totalCost">Total: $<output name="totalCost">0</output></strong>
+    
+    <input type="submit" value="Order" class="btn btn-primary">
 </form>
 {% endblock %}

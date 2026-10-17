@@ -122,3 +122,10 @@ input[type="submit"] {
 .bg-yellow{
   background-color:#f2b817;
 }
+.item-input{
+  max-width: "5rem"
+}
+.input-row{
+  display: "flex";
+  flex-direction: "row";
+}
