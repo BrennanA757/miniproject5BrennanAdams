@@ -128,4 +128,19 @@ input[type="submit"] {
 .input-row{
   display: "flex";
   flex-direction: "row";
+  align-items: center;
+}
+.input-row form{
+  display: inline-block;
+  width: auto;
+}
+.delete_btn{
+  color: #f21717;
+  border: none;
+  text-decoration: underline;
+  background: none;
+  width: max-content !important;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
 }
