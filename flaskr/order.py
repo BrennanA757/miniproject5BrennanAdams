@@ -13,7 +13,7 @@ bp = Blueprint('orders', __name__)
 def index():
     db = get_db()
     _orders = db.execute(
-        'SELECT o.customerID, u.username'
+        'SELECT o.customerID, u.username, o.createdAt, o.id, o.cost, o.item1Quantity, o.item2Quantity, o.item3Quantity'
         ' FROM "order" o JOIN user u ON o.customerID = u.customerID'
     ).fetchall()
     return render_template('orders/index.html', _orders=_orders)
@@ -26,7 +26,7 @@ def create():
         item1 = request.form['item1']
         item2 = request.form['item2']
         item3 = request.form['item3']
-        cost = int(item1) + int(item2) + int(item3)
+        cost = request.form['total']
         error = None
 
         if error is not None:
@@ -35,9 +35,9 @@ def create():
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO "order" (customerId, cost)'
-                ' VALUES (?, ?)',
-                (g.user['customerID'], cost)
+                'INSERT INTO "order" (customerId, cost, item1Quantity, item2Quantity, item3Quantity)'
+                ' VALUES (?, ?, ?, ?, ?)',
+                (g.user['customerID'], cost, int(item1), int(item2), int(item3))
             )
             db.commit()
             return redirect(url_for('orders.index'))
@@ -45,27 +45,27 @@ def create():
     return render_template('orders/create.html')
 
 
-def get_post(id, check_author=True):
-    post = get_db().execute(
-        'SELECT p.id, title, body, created, author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' WHERE p.id = ?',
+def get_order(id, check_author=True):
+    order = get_db().execute(
+        'SELECT o.id, o.customerID, o.cost, o.createdAt'
+        ' FROM order o JOIN user u ON o.customerID = u.customerID'
+        ' WHERE o.customerID = ?',
         (id,)
     ).fetchone()
 
-    if post is None:
-        abort(404, f"Post id {id} doesn't exist.")
+    if order is None:
+        abort(404, f"Order id {id} doesn't exist.")
 
-    if check_author and post['author_id'] != g.user['id']:
+    if check_author and order['customerID'] != g.user['id']:
         abort(403)
 
-    return post
+    return order
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
-    post = get_post(id)
+    order = get_order(id)
 
     if request.method == 'POST':
         title = request.form['title']
@@ -80,20 +80,20 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                'UPDATE post SET title = ?, body = ?'
+                'UPDATE "order" SET title = ?, body = ?'
                 ' WHERE id = ?',
                 (title, body, id)
             )
             db.commit()
             return redirect(url_for('blog.index'))
 
-    return render_template('blog/update.html', post=post)
+    return render_template('orders/update.html', order=order)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    get_post(id)
+    get_order(id)
     db = get_db()
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()

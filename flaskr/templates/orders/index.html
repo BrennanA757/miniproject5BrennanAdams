@@ -8,15 +8,19 @@
 {% endblock %}
 
 {% block content %}
-  {% for order in orders %}
+  {% for order in _orders %}
     <article class="order">
       <header>
         <div>
-          <h1>{{ order['createdAt'] }}</h1>
-          <div class="about">{{ order['id'] }} on {{ order['createdAt'].strftime('%Y-%m-%d') }}</div>
+          <p>Ordered on {{ order['createdAt'].strftime('%Y-%m-%d') }}</p>
+          <p>Apples: {{order['item1Quantity']}}</p>
+          <p>Bananas: {{order['item2Quantity']}}</p>
+          <p>Oranges: {{order['item3Quantity']}}</p>
         </div>
       </header>
-      <!-- <p class="body">{{ order['body'] }}</p> -->
+      {% if g.user['id'] == order['customerID'] %}
+        <a class="action" href="{{ url_for('order.update', id=order['customerID']) }}">Edit</a>
+      {% endif %}
     </article>
     {% if not loop.last %}
       <hr>

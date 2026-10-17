@@ -1,7 +1,7 @@
 {%extends 'base.html'%} {%block header %}
 <h1>{% block title %}Log In{%endblock%}</h1>
 {%endblock%} {% block content %}
-<form method="post" oninput="totalCost.value = (Number(item1.value) * Number(item1Cost.value) + Number(item2.value) * Number(item2Cost.value) + Number(item3.value) * Number(item3Cost.value)).toFixed(2)">
+<form method="post" oninput="total.value = (Number(item1.value) * Number(item1Cost.value) + Number(item2.value) * Number(item2Cost.value) + Number(item3.value) * Number(item3Cost.value)).toFixed(2)">
     <div class="input-row">
         <label for="item1">Apples: 1.70$</label>
         <input type="number" name="item1" id="item1" value=0 class='item-input'/>
@@ -18,7 +18,7 @@
         <input type="hidden" name="item3Cost" value="1.00">
     </div>
 
-    <strong name="totalCost">Total: $<output name="totalCost">0</output></strong>
+    <input type="text" id="total" name="total" readonly value="0.00" class="form-control">
     
     <input type="submit" value="Order" class="btn btn-primary">
 </form>
