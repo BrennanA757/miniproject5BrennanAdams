@@ -1,0 +1,13 @@
+{%extends 'base.html'%} {%block header %}
+<h1>{% block title %}Log In{%endblock%}</h1>
+{%endblock%} {% block content %}
+<form method="post">
+    <label for="item1">Apples</label>
+    <input name="item1" id="item1" value="{{request.form['item1'] }}"/>
+    <label for="item2">Bananas</label>
+    <input name="item2" id="item2" value="{{request.form['item2'] }}"/>
+    <label for="item3">Oranges</label>
+    <input name="item3" id="item3" value="{{request.form['item3'] }}"/>
+    <input type="submit" value="Order">
+</form>
+{% endblock %}

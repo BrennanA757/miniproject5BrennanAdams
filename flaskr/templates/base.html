@@ -8,13 +8,13 @@
 <html lang="en">
   <nav>
     <h1 class="bg-black text-white">Brennan's Flask Thing</h1>
-    <ul>
+    <ul class="bg-black">
       {% if g.user %}
       <li><span>{{ g.user['username'] }}</span></li>
-      <li><a href="{{ url_for('auth.logout') }}"></a></li>
+      <li><a href="{{ url_for('auth.logout') }}" class="theme-subtle">Logout</a></li>
       {% else %}
-      <li><a href="{{url_for('auth.register') }}"></a></li>
-      <li><a href="{{url_for('auth.login') }}"></a></li>
+      <li><a href="{{url_for('auth.register') }}">Register</a></li>
+      <li><a href="{{url_for('auth.login') }}">Login</a></li>
       {% endif %}
     </ul>
   </nav>

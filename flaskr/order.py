@@ -12,12 +12,11 @@ bp = Blueprint('orders', __name__)
 @bp.route('/')
 def index():
     db = get_db()
-    posts = db.execute(
-        'SELECT p.id, title, body, created, author_id, username'
-        ' FROM order o JOIN user u ON o.customerID = u.customerID'
-        ' ORDER BY created DESC'
+    _orders = db.execute(
+        'SELECT o.customerID, u.username'
+        ' FROM "order" o JOIN user u ON o.customerID = u.customerID'
     ).fetchall()
-    return render_template('blog/index.html', posts=posts)
+    return render_template('blog/index.html', _orders=_orders)
 
 
 @bp.route('/order', methods=('GET', 'POST'))
@@ -36,7 +35,7 @@ def order():
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO post (title, body, author_id)'
+                'INSERT INTO "order" (title, body, author_id)'
                 ' VALUES (?, ?, ?)',
                 (title, body, g.user['id'])
             )

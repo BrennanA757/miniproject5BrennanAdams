@@ -20,7 +20,13 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
+    app.cli.add_command(db.init_db_command)
+
     from . import auth
     app.register_blueprint(auth.bp)
+
+    from . import order
+    app.register_blueprint(order.bp)
+    app.add_url_rule('/', endpoint="index")
 
     return app
