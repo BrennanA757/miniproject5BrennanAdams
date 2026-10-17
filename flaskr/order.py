@@ -19,30 +19,30 @@ def index():
     return render_template('orders/index.html', _orders=_orders)
 
 
-@bp.route('/order', methods=('GET', 'POST'))
+@bp.route('/orders', methods=('GET', 'POST'))
 @login_required
-def order():
+def create():
     if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
+        item1 = request.form['item1']
+        item2 = request.form['item2']
+        item3 = request.form['item3']
+        cost = int(item1) + int(item2) + int(item3)
         error = None
-
-        if not title:
-            error = 'Title is required.'
 
         if error is not None:
             flash(error)
+
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO "order" (title, body, author_id)'
-                ' VALUES (?, ?, ?)',
-                (title, body, g.user['id'])
+                'INSERT INTO "order" (customerId, cost)'
+                ' VALUES (?, ?)',
+                (g.user['customerID'], cost)
             )
             db.commit()
-            return redirect(url_for('blog.index'))
+            return redirect(url_for('orders.index'))
 
-    return render_template('blog/create.html')
+    return render_template('orders/create.html')
 
 
 def get_post(id, check_author=True):
