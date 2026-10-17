@@ -14,7 +14,7 @@ Flask Prototype for making, editing, and deleting orders of a set of items.
 
 ## Getting Started
 
-- Be sure to install all of the dependencies by running "pip install -r requirements", then running the flask app with "flask --app flaskr run", depending on your system.
+- Be sure to install all of the dependencies by running "pip install -r requirements". Then you must initialize the database by running "flask --app flaskr init-db". Then lastly, run the flask app with "flask --app flaskr run". These commands may vary slightly depending on your system.
 
 ### Dependencies
 
@@ -26,7 +26,7 @@ Flask Prototype for making, editing, and deleting orders of a set of items.
 
 ### Executing program
 
-- Run the flask app on your system. For windows, the command will be "flask --app flaskr run", but this might change depending on your system.
+- Initialize the database then run the flask app on your system. For windows, the command will be "flask --app flaskr init-db" then "flask --app flaskr run", but this might change depending on your system.
 
 ## Help
 
